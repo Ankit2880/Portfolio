@@ -1,0 +1,12 @@
+version: "3.9"
+services:
+  api:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      - DATABASE_URL=sqlite:///./portfolio.db
+      - ALLOWED_ORIGINS=http://localhost,http://localhost:3000
+      - DEBUG=true
+    volumes:
+      - ./backend:/app/backend
