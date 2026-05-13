@@ -15,4 +15,5 @@ USER appuser
 
 EXPOSE 8000
 
-CMD ["gunicorn", "backend.main:app", "--workers", "2", "--worker-class", "uvicorn.workers.UvicornWorker", "--bind", "0.0.0.0:8000"]
+# Use shell form so $PORT is expanded at runtime (required by Render)
+CMD gunicorn backend.main:app --workers 2 --worker-class uvicorn.workers.UvicornWorker --bind 0.0.0.0:${PORT:-8000}
