@@ -973,11 +973,9 @@ if (contactForm) {
 
     try {
       // ── API Base URL ──────────────────────────────────────────────────────────
-      // For local dev the backend runs on :8000. On production, set this to your
-      // deployed backend URL, e.g. 'https://your-api.onrender.com'
       const API_BASE = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
         ? 'http://localhost:8000'
-        : '';
+        : 'https://ankit-portfolio-esvy.onrender.com';
       const apiUrl = `${API_BASE}/api/contact`;
 
       const response = await fetch(apiUrl, {
