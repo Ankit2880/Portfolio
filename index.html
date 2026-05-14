@@ -213,31 +213,206 @@ a:focus-visible, button:focus-visible, .project-card:focus-visible, .exp-item:fo
   #cursor, #cursor-trail { display: none !important; }
 }
 
+/* HAMBURGER MENU */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  z-index: 200;
+}
+.hamburger span {
+  display: block;
+  width: 24px;
+  height: 2px;
+  background: var(--accent);
+  transition: all 0.3s ease;
+  transform-origin: center;
+}
+.hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+.hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+/* MOBILE DRAWER */
+.mobile-nav-drawer {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 150;
+  background: rgba(2,4,8,0.97);
+  backdrop-filter: blur(20px);
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 32px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+.mobile-nav-drawer.open {
+  display: flex;
+  opacity: 1;
+}
+.mobile-nav-drawer a {
+  font-family: var(--font-display);
+  font-size: 32px;
+  font-weight: 800;
+  letter-spacing: -1px;
+  color: var(--text);
+  text-decoration: none;
+  transition: color 0.3s;
+}
+.mobile-nav-drawer a:hover { color: var(--accent); }
+.mobile-nav-drawer .drawer-cta {
+  margin-top: 16px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 2px;
+  border: 1px solid var(--accent);
+  color: var(--accent);
+  padding: 14px 28px;
+  text-transform: uppercase;
+}
+
+@media (max-width: 900px) {
+  nav {
+    padding: 20px 24px;
+  }
+  .nav-links { display: none; }
+  .hamburger { display: flex; }
+  .nav-cta { display: none; }
+}
+
 @media (max-width: 768px) {
-  nav, .hero-content, #avatar-section, #projects, #experience, #achievements, #contact, footer {
-    padding-left: 24px;
-    padding-right: 24px;
+  /* SECTIONS - base padding */
+  .hero-content,
+  #avatar-section,
+  #projects,
+  #experience,
+  #achievements,
+  #contact,
+  footer {
+    padding-left: 20px;
+    padding-right: 20px;
   }
-  #avatar-section, .exp-grid {
+
+  /* HERO FIXES */
+  #hero { align-items: flex-start; padding-top: 100px; }
+  .hero-content { padding: 0 20px; max-width: 100%; }
+  .hero-h1 {
+    font-size: clamp(38px, 11vw, 56px);
+    letter-spacing: -2px;
+  }
+  .hero-sub { font-size: 14px; max-width: 100%; margin-bottom: 32px; }
+  .hero-btns {
+    flex-direction: column;
+    gap: 12px;
+    width: 100%;
+  }
+  .btn-primary, .btn-secondary {
+    padding: 14px 24px;
+    text-align: center;
+    width: 100%;
+  }
+
+  /* Hide hero stats on mobile — they overlap */
+  .hero-stats { display: none; }
+
+  /* Hero scroll — reposition so it doesn't overlap content */
+  .hero-scroll {
+    left: 20px;
+    bottom: 24px;
+  }
+
+  /* AVATAR / ABOUT */
+  #avatar-section {
+    padding: 60px 20px;
     grid-template-columns: 1fr;
-    gap: 40px;
+    gap: 32px;
   }
+  #avatar-canvas { height: 300px !important; }
+  .avatar-ring { width: 180px; }
+  .about-h2 { font-size: clamp(28px, 8vw, 40px); letter-spacing: -1px; }
+  .about-p { font-size: 14px; }
+
+  /* MARQUEE */
+  .marquee-item { font-size: clamp(24px, 6vw, 40px); }
+
+  /* PROJECTS */
+  #projects { padding: 60px 20px; }
+  .section-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    margin-bottom: 40px;
+  }
+  .section-h2 { font-size: clamp(32px, 10vw, 48px); letter-spacing: -2px; }
+  .project-card {
+    padding: 28px 20px;
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+  .project-arrow { align-self: flex-end; }
+  .project-title { font-size: clamp(18px, 5vw, 26px); }
+
+  /* EXPERIENCE */
+  #experience { padding: 60px 20px; }
+  .exp-grid {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+  .exp-sidebar {
+    position: relative;
+    top: 0;
+    margin-bottom: 0;
+  }
+  .exp-big {
+    font-size: 60px;
+    letter-spacing: -3px;
+  }
+  .exp-item { padding: 24px 16px; }
+  .exp-role { font-size: 16px; }
+
+  /* ACHIEVEMENTS */
+  #achievements { padding: 60px 20px; }
   .achieve-wrap {
     grid-template-columns: 1fr;
-    gap: 16px;
+    gap: 12px;
   }
-  .project-card {
-    grid-template-columns: 1fr;
-    gap: 16px;
+  .achieve-card { padding: 32px 24px; }
+
+  /* CONTACT */
+  #contact { padding: 80px 20px; }
+  .contact-h2 {
+    font-size: clamp(36px, 10vw, 56px);
+    letter-spacing: -2px;
+    line-height: 1;
   }
-  .nav-links {
-    display: none;
+  .contact-form-wrap { max-width: 100%; }
+  .contact-social {
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
   }
-  .hero-h1 { font-size: clamp(40px, 12vw, 56px); }
-  .contact-h2 { font-size: clamp(40px, 12vw, 64px); }
-  .exp-sidebar { position: relative; top: 0; margin-bottom: 24px; }
-  .about-h2 { font-size: clamp(32px, 8vw, 40px); }
-  .section-h2 { font-size: clamp(36px, 10vw, 48px); }
+  .social-btn { width: 100%; text-align: center; padding: 14px 24px; }
+
+  /* FOOTER */
+  footer {
+    padding: 32px 20px;
+    flex-direction: column;
+    gap: 12px;
+    text-align: center;
+  }
+}
+
+/* Extra small screens (iPhone SE, narrow Android) */
+@media (max-width: 390px) {
+  .hero-h1 { font-size: clamp(32px, 10vw, 44px); }
+  .hero-badge { font-size: 9px; letter-spacing: 2px; }
+  .section-h2 { font-size: 28px; }
+  .contact-h2 { font-size: 30px; letter-spacing: -1px; }
 }
 </style>
 </head>
@@ -269,7 +444,19 @@ a:focus-visible, button:focus-visible, .project-card:focus-visible, .exp-item:fo
     <a href="#contact">Contact</a>
   </div>
   <a href="mailto:av2322003@gmail.com" class="nav-cta">Hire Me</a>
+  <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
+
+<!-- MOBILE DRAWER -->
+<div class="mobile-nav-drawer" id="mobile-drawer">
+  <a href="#avatar-section" class="drawer-link">About</a>
+  <a href="#projects" class="drawer-link">Projects</a>
+  <a href="#experience" class="drawer-link">Experience</a>
+  <a href="#contact" class="drawer-link">Contact</a>
+  <a href="mailto:av2322003@gmail.com" class="drawer-cta">Hire Me ↗</a>
+</div>
 
 <!-- HERO -->
 <section id="hero">
@@ -651,7 +838,8 @@ animHero();
 // ===== AVATAR — 3D Character with Three.js =====
 function buildAvatar(){
   const canvas = document.getElementById('avatar-canvas');
-  const w=canvas.parentElement.offsetWidth, h=550;
+  const isMobile = window.innerWidth <= 768;
+  const w=canvas.parentElement.offsetWidth, h=isMobile ? 300 : 550;
   canvas.width=w; canvas.height=h;
 
   const renderer = new THREE.WebGLRenderer({canvas,alpha:true,antialias:true});
@@ -929,6 +1117,30 @@ window.addEventListener('resize',()=>{
   hCanvas.width=window.innerWidth;hCanvas.height=window.innerHeight;
   loaderCanvas.width=window.innerWidth;loaderCanvas.height=window.innerHeight;
 });
+
+// HAMBURGER MENU
+const hamburger = document.getElementById('hamburger');
+const mobileDrawer = document.getElementById('mobile-drawer');
+if (hamburger && mobileDrawer) {
+  hamburger.addEventListener('click', () => {
+    hamburger.classList.toggle('open');
+    if (mobileDrawer.classList.contains('open')) {
+      mobileDrawer.style.opacity = '0';
+      setTimeout(() => { mobileDrawer.classList.remove('open'); }, 300);
+    } else {
+      mobileDrawer.classList.add('open');
+      setTimeout(() => { mobileDrawer.style.opacity = '1'; }, 10);
+    }
+  });
+  // Close drawer on link click
+  mobileDrawer.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+      hamburger.classList.remove('open');
+      mobileDrawer.style.opacity = '0';
+      setTimeout(() => { mobileDrawer.classList.remove('open'); }, 300);
+    });
+  });
+}
 
 // Smooth nav color on scroll
 window.addEventListener('scroll',()=>{
